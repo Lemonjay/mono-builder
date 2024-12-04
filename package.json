@@ -18,10 +18,10 @@
   "author": "Lemonjay",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lemonjay/monorepo-builder.git"
+    "url": "git+https://github.com/Lemonjay/mono-builder.git"
   },
   "bugs": {
-    "url": "https://github.com/Lemonjay/monorepo-builder/issues"
+    "url": "https://github.com/Lemonjay/mono-builder/issues"
   },
   "license": "ISC",
   "dependencies": {

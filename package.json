@@ -1,0 +1,67 @@
+{
+  "name": "mono-builder",
+  "version": "1.0.0",
+  "description": "This project is designed for monorepo development and can be used for module packaging, dynamic generation of .d.ts files, and API generation.",
+  "type": "module",
+  "main": "Build/mono-builder.min.js",
+  "module": "Build/mono-builder.min.js",
+  "types": "Build/mono-builder.d.ts",
+  "keywords": [
+    "build",
+    "gulp",
+    "typescript",
+    "javascript",
+    "jsdoc",
+    "monorepo"
+  ],
+  "sideEffects": false,
+  "author": "Lemonjay",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lemonjay/monorepo-builder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lemonjay/monorepo-builder/issues"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-image": "^3.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "axios": "^1.7.7",
+    "chalk": "^5.3.0",
+    "esbuild": "^0.23.0",
+    "esbuild-plugin-globals": "^0.2.0",
+    "fs-extra": "^11.2.0",
+    "globby": "^14.0.0",
+    "glsl-strip-comments": "^1.0.0",
+    "gulp": "^5.0.0",
+    "gulp-zip": "^6.0.0",
+    "lodash": "^4.17.21",
+    "magic-string": "^0.30.12",
+    "mkdirp": "^3.0.1",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.24.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "rollup-plugin-external-globals": "^0.10.0",
+    "rollup-plugin-import-css": "^3.5.0",
+    "rollup-plugin-node-externals": "^7.1.3",
+    "rollup-plugin-obfuscator": "^1.1.0",
+    "rollup-plugin-polyfill-node": "^0.13.0",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "rollup-pluginutils": "^2.8.2",
+    "typedoc": "^0.27.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.2",
+    "vite-plugin-dts": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/gulp": "^4.0.17",
+    "javascript-obfuscator": "^4.1.1"
+  }
+}

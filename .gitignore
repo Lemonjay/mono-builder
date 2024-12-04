@@ -6,3 +6,5 @@ npm-debug.log.*
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/shelf
+
+script.bat

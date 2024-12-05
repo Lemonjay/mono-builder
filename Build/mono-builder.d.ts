@@ -138,9 +138,17 @@ export namespace BuilderSettings {
      */
     var typedocPlugin: string[];
     /**
-     * set cesium docs config path
+     * Sets the tools folder.
+     */
+    var toolsFolder: string;
+    /**
+     * Sets cesium docs config path
      */
     var cesiumDocsFolder: string;
+    /**
+     * Sets the tools folder.
+     */
+    var tsdConfPath: string;
     /**
      * Set cesium Documentation path
      */
@@ -1340,7 +1348,7 @@ export class ToolManager extends BaseManager {
     /**
      * Create a release module for npm publish.
      */
-    createRelease(minify?: boolean): void;
+    createRelease(minify?: boolean): Promise<void>;
     /**
      * Copy index and dts files
      */
@@ -1352,7 +1360,7 @@ export class ToolManager extends BaseManager {
     /**
      * Filter builtinModules.
      */
-    getThirdModules(): string[];
+    getThirdModules(): Promise<string[]>;
     /**
      * Gets the third modules.
      */

@@ -1,6 +1,6 @@
 import type { BuildOptions as EsbuildOptions } from "esbuild";
 import type { ObfuscatorOptions } from "javascript-obfuscator";
-declare module "@ultimate/module-builder" {
+declare module "mono-builder" {
 /**
  * Build a specific module such as 'packages/simulation-app'.
  */
@@ -154,13 +154,17 @@ export namespace BuilderSettings {
      */
     var version: string;
     /**
-     * Set the argv arguments for build cesium documents.
+     * Sets the argv arguments for build cesium documents.
      */
     var argv: any;
     /**
      * Set thirdImportNames
      */
     var thirdImportNames: string[];
+    /**
+     * Sets singleThirdImportNames
+     */
+    var singleThirdImportNames: string[];
     /**
      * Set examples folder.
      */
@@ -304,12 +308,14 @@ export class CesiumESBuilder {
 
 /**
  * Creates an instance of CesiumTSBuilder.
+ * @param [options.singleThirdImports] - these imports with a singer export.
  */
 export class CesiumTSBuilder {
     constructor(options: {
         scope: string;
         workspace: string;
         thirdImports: string[];
+        singleThirdImports?: string[];
     });
     /**
      * Build TS files.
@@ -327,11 +333,23 @@ export class CesiumTSBuilder {
         [key: string]: string[];
     }, isTypeOnly?: boolean): string;
     /**
+     * Write single third imports.
+     */
+    writeSingleImports(source: string): string;
+    /**
+     * add get single Imports
+     */
+    getSingleImports(): void;
+    /**
      * Extract imports
      */
     getImports(thirdImports: {
         [key: string]: string[];
     }): void;
+    /**
+     * Gets the source files.
+     */
+    getSourceFiles(): Promise<string[]>;
     /**
      * Get type imports.
      */
@@ -663,7 +681,7 @@ export class TypescriptBuilder extends BaseBuilder {
      */
     static generateTypes(workspace: string): void;
     /**
-     * Generate tsconfig
+     * Generate tsconfig dynamically
      * @returns The path of the tsconfig.
      */
     static generateConfig(workspace: string): string;
@@ -742,6 +760,11 @@ export function capitalizeWords(content: string): string;
 export function copyDirectory(originFolder: string, targetFolder: string): void;
 
 /**
+ * Copy Directory
+ */
+export function copyDirectoryOnWindows(originFolder: string, targetFolder: string): void;
+
+/**
  * Create folder if the folder was existed。
  */
 export function createDirectory(folderPath: string, recreate?: boolean): Promise<string>;
@@ -806,7 +829,7 @@ export function execCommandSync(command: string, options?: ExecCommand.OptionsTy
 /**
  * Exec Command
  */
-export function execCommand(command: string, options?: ExecCommand.OptionsType): void;
+export function execCommand(command: string, options?: ExecCommand.OptionsType): Promise<string>;
 
 /**
  * Filter and sort Array
@@ -852,6 +875,25 @@ export function generatePassword(length?: number): string;
 export function getCurrentDate(isCommonStyle?: boolean): string;
 
 /**
+ * Define the ThreeExtendImports
+ */
+export namespace ThreeExtendImports {
+    /**
+     * Define the name type.
+     */
+    type ResultType = {
+        content: string;
+        value: string | string[];
+        path: string;
+    };
+}
+
+/**
+ * Gets the extend imports of the threejs module.
+ */
+export function getExtendImportsOfThree(content: string): ThreeExtendImports.ResultType[];
+
+/**
  * Define the ThirdPartyImports
  */
 export namespace ThirdPartyImports {
@@ -884,6 +926,11 @@ export function getTypeImports(content: string): {
 };
 
 /**
+ * Gets the workspaces of the monorepo project.
+ */
+export function getWorkspaces(packagePath: string): string[];
+
+/**
  * Define the frontend LanguageType.
  */
 export enum LanguageType {
@@ -902,8 +949,12 @@ export enum LinkType {
 
 /**
  * Make hard or soft link。
+ * @param sourcePath - The source path (use the absolute link).
+ * @param linkPath - The path where the link will be created.
+ * @param [removeLink = false] - Whether to remove the existing link before creating a new one.
+ * @param [linkType] - The type of link to create. Can be either 'hard' or 'soft' or 'junction'.
  */
-export function makeLink(targetPath: string, linkPath: string, removeLink?: boolean, linkType?: LinkType): void;
+export function makeLink(sourcePath: string, linkPath: string, removeLink?: boolean, linkType?: LinkType): void;
 
 /**
  * Define ModuleType
@@ -1091,7 +1142,7 @@ export class GitManager {
     /**
      * Set remote origin url
      */
-    setRemoteOrigin(url: any): void;
+    setRemoteOrigin(url: string): void;
     /**
      * Push branches to the local git.
      */
@@ -1234,6 +1285,10 @@ export class PackageManager extends BaseManager {
     static buildModules(workspaces: string[], options: PackageManager.BuildModuleOptionsType): void;
     /**
      * Build module
+    
+    1. UpdateModule
+    2. build
+    3. copy and modify: PackageManager.copyPackFiles
      * @param workspace - The relative path of the module.
      * @param options - The options of the module building.
      */

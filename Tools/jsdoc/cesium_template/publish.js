@@ -17,6 +17,8 @@ const hasOwnProp = Object.prototype.hasOwnProperty;
 
 let data;
 let view;
+let apiScopeTitle;
+let authorLink;
 
 // eslint-disable-next-line no-undef
 let outdir = env.opts.destination;
@@ -144,6 +146,8 @@ function generate(title, docs, filename, resolveLinks) {
     filename: filename,
     title: title,
     docs: docs,
+    apiScopeTitle, // add custom title
+    authorLink,
   };
 
   const outpath = path.join(outdir, filename);
@@ -253,13 +257,17 @@ exports.publish = function (taffyData, opts, tutorials) {
   const conf = env.conf.templates || {};
   conf.default = conf.default || {};
 
+  const apiScope = !!opts.apiScope ? opts.apiScope + '.' : ''; // add custom project scope
+  apiScopeTitle = !!opts.apiScopeTitle ? opts.apiScopeTitle : opts.apiScope;
+  authorLink = opts.authorLink;
+
   const templatePath = opts.template;
-  view = new template.Template(`${templatePath}/tmpl`);
+  view = new template.Template(`${templatePath}/tmpl`); // load tmpl as render function
 
   // claim some special filenames in advance, so the All-Powerful Overseer of Filename Uniqueness
   // doesn't try to hand them out later
   const indexUrl = helper.getUniqueFilename('index');
-  // don't call registerLink() on this one! 'index' is also a valid longname
+  // don't call registerLink() on this one! 'index' is also a valid long name
 
   const globalUrl = helper.getUniqueFilename('global');
   helper.registerLink('global', globalUrl);
@@ -276,8 +284,11 @@ exports.publish = function (taffyData, opts, tutorials) {
 
   let sourceFiles = {};
   const sourceFilePaths = [];
+
+  // The item of the data add name
   data().each(function (doclet) {
     doclet.attribs = '';
+    doclet.apiScope = apiScope;
 
     doclet.longname = doclet.longname.replace(/^module:/, '');
     if (doclet.memberof) doclet.memberof = doclet.memberof.replace(/^module:/, '');

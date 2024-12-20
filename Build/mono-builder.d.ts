@@ -34,7 +34,7 @@ export class AppBuilder extends JavascriptBuilder {
  * @param options.directory - The folder where the project is located.
  * @param options.projectName - The name of the project.
  * @param [options.outFolder] - The output folder where the zip file will be saved.
- * @param [options.baseName] - The output name of the zip file. If not set, basename will use the projectName instead.
+ * @param [options.alias] - The output name of the zip file. If not set, alias will use the projectName instead.
  * @param [options.password] - The password for encrypting the zip file.
  * @param [options.author] - The author of the project.
  * @param [options.version] - The version of the project.
@@ -44,7 +44,7 @@ export class ArchiveBuilder {
         directory: string;
         projectName: string;
         outFolder?: string;
-        baseName?: string;
+        alias?: string;
         password?: string;
         author?: string;
         version?: string;
@@ -80,7 +80,7 @@ export class BackendBuilder extends JavascriptBuilder {
     /**
      * Update module
      */
-    static updateModule(workspace: string): void;
+    static updateModule(workspace: string): Promise<void>;
 }
 
 /**
@@ -129,6 +129,14 @@ export namespace BuilderSettings {
      * Set scope name.
      */
     var scope: string;
+    /**
+     * Set the scope name for creating API documents.
+     */
+    var docApiScope: string;
+    /**
+     * Set the scope title name for creating API documents.
+     */
+    var docApiTitle: string;
     /**
      * Set the path of the eslintignore.
      */
@@ -478,7 +486,7 @@ export class JavascriptBuilder extends BaseBuilder {
     /**
      * Update module
      */
-    static updateModule(workspace: string): void;
+    static updateModule(workspace: string): Promise<void>;
 }
 
 export namespace PageBuilder {
@@ -517,11 +525,11 @@ export class PageBuilder {
     /**
      * create template html pages
      */
-    createHtmlPages(): void;
+    createHtmlPages(): Promise<void>;
     /**
      * remove template html pages
      */
-    removeHtmlPages(): void;
+    removeHtmlPages(): Promise<boolean[]>;
     /**
      * Copy index while vite-build
      */
@@ -533,7 +541,7 @@ export class PageBuilder {
     /**
      * build
      */
-    build(): void;
+    build(): Promise<void>;
     /**
      * Create template options for vite.config.js
      */
@@ -612,7 +620,7 @@ export class RollupBuilder {
     /**
      * Build Entrance
      */
-    build(workspace: string, options?: RollupBuilder.BundleOptions): void;
+    build(workspace: string, options?: RollupBuilder.BundleOptions): Promise<void>;
     /**
      * Create bundle
      */
@@ -712,7 +720,7 @@ export class TypescriptBuilder extends BaseBuilder {
     /**
      * Update module
      */
-    static updateModule(workspace: string): void;
+    static updateModule(workspace: string): Promise<void>;
 }
 
 /**
@@ -1284,13 +1292,13 @@ export class PackageManager extends BaseManager {
     static buildDocuments(workspaces: string[], options: {
         moduleType: ModuleType;
         outFolder: string;
-    }): void;
+    }): Promise<void>;
     /**
      * Build modules
      * @param workspaces - The relative paths of the modules.
      * @param options - The options of the module building.
      */
-    static buildModules(workspaces: string[], options: PackageManager.BuildModuleOptionsType): void;
+    static buildModules(workspaces: string[], options: PackageManager.BuildModuleOptionsType): Promise<void>;
     /**
      * Build module
     
@@ -1300,7 +1308,7 @@ export class PackageManager extends BaseManager {
      * @param workspace - The relative path of the module.
      * @param options - The options of the module building.
      */
-    static buildModule(workspace: string, options: PackageManager.BuildModuleOptionsType): void;
+    static buildModule(workspace: string, options: PackageManager.BuildModuleOptionsType): Promise<void>;
 }
 
 /**

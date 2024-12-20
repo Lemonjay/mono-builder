@@ -14,11 +14,14 @@
     "default": {
       "outputSourceFiles": false
     },
-    "sourceUrl": "https://github.com/CesiumGS/cesium/blob/{version}/packages/{filename}"
+    "sourceUrl": "http://localhost:5173/packages/{filename}"
   },
   "opts": {
     "destination": "Build/Documentation",
     "template": "./Tools/jsdoc/cesium_template",
-    "recurse": true
+    "recurse": true,
+    "apiScope": "Ultimate",
+    "authorLink": "https://github.com/Lemonjay",
+    "apiScopeTitle": "Ultimate"
   }
 }

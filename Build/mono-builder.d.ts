@@ -353,6 +353,12 @@ export class CesiumTSBuilder {
      */
     writeSingleImports(source: string): string;
     /**
+     * Write some file with .d.ts declaration.
+     * @example
+     * // Cesium.Check
+     */
+    writeWithDtsFile(source: string): string;
+    /**
      * add get single Imports
      */
     getSingleImports(): void;
@@ -366,6 +372,10 @@ export class CesiumTSBuilder {
      * Gets the source files.
      */
     getSourceFiles(): Promise<string[]>;
+    /**
+     * Gets the files.
+     */
+    getFiles(format?: string): Promise<string[]>;
     /**
      * Get type imports.
      */

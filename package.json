@@ -1,6 +1,6 @@
 {
   "name": "mono-builder",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "This project is designed for monorepo development and can be used for module packaging, dynamic generation of .d.ts files, and API generation.",
   "type": "module",
   "main": "Build/mono-builder.min.js",

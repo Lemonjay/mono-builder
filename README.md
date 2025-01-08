@@ -15,13 +15,13 @@
 - npm install
 
   ```sh
-  npm i mono-builder -D
+  npm i @fragsky/mono-builder -D
   ```
 
 - pnpm install
 
   ```sh
-  pnpm add mono-builder -D
+  pnpm add @fragsky/mono-builder -D
   ```
 
 - 注意：该依赖项需要 `tsd-doc` 和 `jsdoc`，用于生成模块文档和声明文件，因此需要安装以下依赖：
